@@ -12,7 +12,6 @@
 #>
 
 
-
 # Mark the start time of the script execution
 $startTime = Get-Date
 
@@ -26,15 +25,27 @@ $locations = Get-AzureLocation
 
 $mySvc = "UniqueNameOfYourService"
 
-$myPwd = "P@ssw0rd"
+# You can test if the Service already exist 
+$serviceExist= Test-AzureName -Name $mySvc -Service 
 
-$userName = "User"
+if($serviceExist)
+{
+    throw "The service already exists"
+    exit; 
+}
+else
+{
 
-#Be sure to select a Windows Server Image from the list (Ex $images[80].imagename) 
-#Consider the  Source image location to be the same one than the one of the affinity group
+    $myPwd = "P@ssw0rd"
+    $userName = "User"
 
-New-AzureQuickVM -Windows -name "MyWinVM" -ImageName $images[80].imagename  -ServiceName $mySvc -Location $locations[6].name -AdminUsername $userName -Password $myPwd
+    #Be sure to select a Windows Server Image from the list (Ex $images[80].imagename) 
+    #Consider the  Source image location to be the same one than the one of the affinity group
 
+    New-AzureQuickVM -Windows -name "MyWinVM" -ImageName $images[80].imagename  -ServiceName $mySvc -Location $locations[6].name -AdminUsername $userName -Password $myPwd
+
+
+}
 $finishTime= Get-Date
 
 Write-Verbose ("Total time used (seconds): {0}" -f ($finishTime - $startTime).TotalSeconds)
