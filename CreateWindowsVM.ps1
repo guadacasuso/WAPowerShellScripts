@@ -11,15 +11,6 @@
     This example creates a new Windows VM 
 #>
 
-<#param(
-    [CmdletBinding( SupportsShouldProcess=$true)]
-         
-    # The webSite Name you want to create
-    [Parameter(Mandatory = $true)] 
-    [string]$WebSiteName
-          
-    )
-#>
 
 
 # Mark the start time of the script execution
